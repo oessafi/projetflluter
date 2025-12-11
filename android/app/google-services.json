@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "685095271302",
+    "project_id": "projet-cfa53",
+    "storage_bucket": "projet-cfa53.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:685095271302:android:a6fa0e602abc866a5a0a07",
+        "android_client_info": {
+          "package_name": "com.example.chouchou"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB_UCi1YSX_f3cu32Q3QgTM906rPRTqGu8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
