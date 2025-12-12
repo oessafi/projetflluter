@@ -56,3 +56,12 @@ android {
 flutter {
     source = "../.."
 }
+
+dependencies {
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:1.7.10"
+    implementation platform('com.google.firebase:firebase-bom:32.2.0') // Ajout de la BOM Firebase
+    implementation 'com.google.firebase:firebase-auth-ktx' // Ajout de Firebase Auth
+}
+
+// Appliquez le plugin Google Services
+apply plugin: 'com.google.gms.google-services'
