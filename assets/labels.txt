@@ -1,0 +1,8 @@
+apple
+avocado
+banana
+blueberry
+mango
+orange
+pineapple
+watermelon

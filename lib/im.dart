@@ -1,5 +1,5 @@
-// lib/im.dart
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class Mymenu extends StatefulWidget {
   const Mymenu({super.key});
@@ -9,94 +9,89 @@ class Mymenu extends StatefulWidget {
 }
 
 class _MymenuState extends State<Mymenu> {
+  // Fonction de déconnexion
+  Future<void> _signOut() async {
+    await FirebaseAuth.instance.signOut();
+    if (!mounted) return;
+    // Retour à la page de connexion et suppression de l'historique
+    Navigator.of(context).pushNamedAndRemoveUntil('/signin', (route) => false);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Drawer(
       child: ListView(
         padding: EdgeInsets.zero,
         children: [
-          // --- HEADER ---
+          // --- EN-TÊTE DU MENU (HEADER) ---
           const DrawerHeader(
             decoration: BoxDecoration(
-              color: Colors.blue,
+              color: Colors.deepPurple,
             ),
             child: Row(
               children: [
                 CircleAvatar(
                   radius: 35.0,
-                  backgroundImage: AssetImage(
-                    'assets/image/OIP.jpg',
-                  ),
+                  // Assure-toi que cette image existe ou utilise une icône
+                  backgroundImage: AssetImage('assets/image/OIP.jpg'),
+                  // child: Icon(Icons.person, size: 40), // Alternative si pas d'image
                 ),
                 SizedBox(width: 15),
                 Flexible(
-                  child: Text(
-                    'chouchou',
-                    style: TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white,
-                    ),
-                    overflow: TextOverflow.ellipsis,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Chouchou',
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white,
+                        ),
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                      Text(
+                        'Utilisateur',
+                        style: TextStyle(
+                          fontSize: 14,
+                          color: Colors.white70,
+                        ),
+                      ),
+                    ],
                   ),
                 ),
               ],
             ),
           ),
 
-          // --- MENU DÉROULANT (MODELS) ---
+          // --- SECTION MODÈLES IA ---
           const ExpansionTile(
-            childrenPadding: EdgeInsets.only(left: 25.0),
-            leading: Icon(Icons.image),
-            title: Text("Image Classification Models"),
-            subtitle: Text("Choose a model"),
+            leading: Icon(Icons.psychology),
+            title: Text("Modèles IA"),
+            childrenPadding: EdgeInsets.only(left: 20),
             children: [
               ListTile(
-                title: Text("ANN model"),
-              ),
-              ListTile(
-                title: Text("CNN model"),
+                leading: Icon(Icons.grid_view, size: 20),
+                title: Text("Classification d'image"),
+                onTap: null, 
               ),
             ],
           ),
 
-          const Divider(color: Colors.grey, height: 1),
+          const Divider(),
 
-          // --- AUTRES FONCTIONNALITÉS ---
-          ListTile(
-            leading: const Icon(Icons.settings),
-            title: const Text('Stock price prediction'),
-            onTap: () {
-              // TODO: Logique ou navigation si tu veux
-            },
-          ),
-          ListTile(
-            leading: const Icon(Icons.info),
-            title: const Text('vocal assistant'),
-            onTap: () {
-              // TODO
-            },
-          ),
-
-          const Divider(color: Colors.grey, height: 1),
-
-          // --- NAVIGATION SIGN UP & AUTRES PAGES ---
-          ListTile(
-            leading: const Icon(Icons.person_add),
-            title: const Text('S\'inscrire (Sign Up)'),
-            onTap: () {
-              Navigator.pop(context);
-              Navigator.pushNamed(context, '/signup');
-            },
-          ),
+          // --- NAVIGATION ---
+          
           ListTile(
             leading: const Icon(Icons.show_chart),
-            title: const Text('Stock'),
+            title: const Text('Bourse (Stock)'),
             onTap: () {
-              Navigator.pop(context);
+              Navigator.pop(context); 
               Navigator.pushNamed(context, '/stock');
             },
           ),
+
           ListTile(
             leading: const Icon(Icons.mic),
             title: const Text('Assistant Vocal'),
@@ -105,47 +100,31 @@ class _MymenuState extends State<Mymenu> {
               Navigator.pushNamed(context, '/vocal');
             },
           ),
+
           ListTile(
-            leading: const Icon(Icons.image),
+            leading: const Icon(Icons.image_search),
             title: const Text("Classification d'image"),
             onTap: () {
               Navigator.pop(context);
               Navigator.pushNamed(context, '/image');
             },
           ),
+
+          const Divider(),
+
+          // --- DÉCONNEXION ---
+          ListTile(
+            leading: const Icon(Icons.logout, color: Colors.red),
+            title: const Text(
+              'Se déconnecter',
+              style: TextStyle(color: Colors.red, fontWeight: FontWeight.bold),
+            ),
+            onTap: () {
+              Navigator.pop(context);
+              _signOut();
+            },
+          ),
         ],
-      ),
-    );
-  }
-}
-
-class HomePage extends StatelessWidget {
-  const HomePage({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Profil utilisateur'),
-      ),
-      drawer: const Mymenu(),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            const Text(
-              'Bienvenue sur votre profil',
-              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-            ),
-            const SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: () {
-                Navigator.pushReplacementNamed(context, '/signin');
-              },
-              child: const Text('Se déconnecter'),
-            ),
-          ],
-        ),
       ),
     );
   }

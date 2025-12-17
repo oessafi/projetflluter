@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'im.dart';
+// import 'im.dart'; // Plus besoin d'importer le menu ici si on ne l'utilise pas
 
 class SignInPage extends StatefulWidget {
   const SignInPage({super.key});
@@ -31,7 +31,6 @@ class _SignInPageState extends State<SignInPage> {
     setState(() => _isLoading = true);
 
     try {
-      // Sign in with Firebase Authentication
       await FirebaseAuth.instance.signInWithEmailAndPassword(
         email: _emailCtrl.text.trim(),
         password: _pwdCtrl.text.trim(),
@@ -39,7 +38,7 @@ class _SignInPageState extends State<SignInPage> {
 
       if (!mounted) return;
 
-      // Navigate to the home page on success
+      // Redirection vers la Home (où le menu sera visible)
       Navigator.pushReplacementNamed(context, '/home');
     } on FirebaseAuthException catch (e) {
       String message = 'Une erreur est survenue';
@@ -69,14 +68,15 @@ class _SignInPageState extends State<SignInPage> {
 
     return Scaffold(
       appBar: AppBar(title: const Text('Se connecter')),
-      drawer: const Mymenu(),
+      // SUPPRESSION DU DRAWER ICI :
+      // drawer: const Mymenu(), 
       body: SafeArea(
         child: SingleChildScrollView(
           padding: EdgeInsets.fromLTRB(
             16,
             16,
             16,
-            16 + MediaQuery.of(context).viewInsets.bottom, // ضدّ overflow مع الكلافيي
+            16 + MediaQuery.of(context).viewInsets.bottom,
           ),
           child: Center(
             child: ConstrainedBox(

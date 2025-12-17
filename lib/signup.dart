@@ -35,7 +35,7 @@ class _SignUpPageState extends State<SignUpPage> {
     setState(() => _isLoading = true);
 
     try {
-      // Create a user with Firebase Authentication
+      // Création de l'utilisateur Firebase
       await FirebaseAuth.instance.createUserWithEmailAndPassword(
         email: _emailCtrl.text.trim(),
         password: _pwdCtrl.text.trim(),
@@ -43,11 +43,21 @@ class _SignUpPageState extends State<SignUpPage> {
 
       if (!mounted) return;
 
-      // Navigate to the home page on success
-      Navigator.pushReplacementNamed(context, '/home');
+      // CORRECTION : On affiche le message AVANT de changer de page
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Compte créé avec succès')),
+        const SnackBar(
+          content: Text('Compte créé avec succès ! Connectez-vous.'),
+          backgroundColor: Colors.green,
+        ),
       );
+
+      // On attend un tout petit peu pour que l'utilisateur voie le message (optionnel mais mieux)
+      await Future.delayed(const Duration(seconds: 1));
+
+      if (!mounted) return;
+      // Redirection vers la page d'accueil
+      Navigator.pushReplacementNamed(context, '/home');
+
     } on FirebaseAuthException catch (e) {
       String message = 'Une erreur est survenue';
       if (e.code == 'email-already-in-use') {
@@ -59,45 +69,10 @@ class _SignUpPageState extends State<SignUpPage> {
       }
 
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text(message)),
-      );
-    } catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Erreur inattendue : $e')),
-      );
-    } finally {
-      if (mounted) setState(() => _isLoading = false);
-    }
-  }
-
-  Future<void> _signIn() async {
-    if (!_formKey.currentState!.validate()) return;
-
-    setState(() => _isLoading = true);
-
-    try {
-      // Sign in with Firebase Authentication
-      await FirebaseAuth.instance.signInWithEmailAndPassword(
-        email: _emailCtrl.text.trim(),
-        password: _pwdCtrl.text.trim(),
-      );
-
-      if (!mounted) return;
-
-      // Navigate to the home page on success
-      Navigator.pushReplacementNamed(context, '/home');
-    } on FirebaseAuthException catch (e) {
-      String message = 'Une erreur est survenue';
-      if (e.code == 'user-not-found') {
-        message = 'Utilisateur non trouvé';
-      } else if (e.code == 'wrong-password') {
-        message = 'Mot de passe incorrect';
-      } else if (e.code == 'invalid-email') {
-        message = 'Email invalide';
-      }
-
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text(message)),
+        SnackBar(
+          content: Text(message),
+          backgroundColor: Colors.red,
+        ),
       );
     } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
@@ -207,7 +182,7 @@ class _SignUpPageState extends State<SignUpPage> {
                         ),
                         const SizedBox(height: 20),
 
-                        // Bouton
+                        // Bouton Inscription
                         SizedBox(
                           width: double.infinity,
                           height: 48,
@@ -216,7 +191,7 @@ class _SignUpPageState extends State<SignUpPage> {
                             child: _isLoading
                                 ? const SizedBox(
                                     width: 22, height: 22,
-                                    child: CircularProgressIndicator(strokeWidth: 2),
+                                    child: CircularProgressIndicator(strokeWidth: 2, color: Colors.white),
                                   )
                                 : const Text('Créer un compte'),
                           ),
