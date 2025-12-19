@@ -12,6 +12,11 @@ subprojects {
 subprojects {
     project.evaluationDependsOn(":app")
 }
+subprojects {
+    if (!project.hasProperty('namespace')) {
+        project.ext.set('namespace', "com.example.${project.name}")
+    }
+}
 
 tasks.register("clean", Delete) {
     delete rootProject.buildDir
