@@ -26,19 +26,31 @@ dependencies:
 
   # TFLite
   image_picker: ^0.8.9 
-  flutter_tflite: ^1.0.1
+  tflite_flutter: ^0.12.1
+  image: ^4.6.0
+  typed_data: ^1.4.0
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_lints: ^6.0.0
+  # AJOUT ICI
+  flutter_launcher_icons: ^0.13.1
+
+# AJOUT DE LA CONFIGURATION ICI
+flutter_launcher_icons:
+  android: true
+  ios: true
+  image_path: "assets/icon/fruit-icon.jpg"
 
 flutter:
   uses-material-design: true
 
-  # Déclaration des assets
   assets:
-    - assets/image/
-    - assets/fruit_model.tflite
-    - assets/fruit_ann_model.tflite
+    - assets/CNN_best_quantized.tflite
+    - assets/ANN_best_quantized.tflite
     - assets/labels.txt
+   
+    - assets/icon/fruit-icon.jpg
+    - assets/user.png
+   

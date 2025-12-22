@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'im.dart'; // Importe le menu drawer
 
 class HomePage extends StatelessWidget {
@@ -6,8 +7,13 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // Récupération de l'utilisateur connecté
+    User? user = FirebaseAuth.instance.currentUser;
+
     return Scaffold(
-      appBar: AppBar(title: const Text('Accueil')),
+      appBar: AppBar(
+        title: Text('Accueil - ${user?.displayName ?? "Utilisateur"}'),
+      ),
       drawer: const Mymenu(), // Le menu latéral
       body: const Center(
         child: Column(

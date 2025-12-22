@@ -2,7 +2,7 @@ plugins {
     id "com.android.application"
     id "kotlin-android"
     id "dev.flutter.flutter-gradle-plugin"
-    id "com.google.gms.google-services" // ✅ Correct placement
+    id "com.google.gms.google-services"
 }
 
 def localProperties = new Properties()
@@ -18,7 +18,7 @@ def flutterVersionName = localProperties.getProperty("flutter.versionName") ?: "
 
 android {
     namespace = "com.example.chouchou"
-    compileSdk = 35
+    compileSdk = 36  // Changé de 35 à 36
     ndkVersion = "27.0.12077973"
 
     compileOptions {
@@ -32,8 +32,8 @@ android {
 
     defaultConfig {
         applicationId = "com.example.chouchou"
-        minSdkVersion = flutter.minSdkVersion
-        targetSdk = 35
+        minSdkVersion =26
+        targetSdk = 36  // Changé de 35 à 36
         versionCode = flutterVersionCode.toInteger()
         versionName = flutterVersionName
     }

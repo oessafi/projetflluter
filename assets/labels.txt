@@ -1,8 +1,10 @@
 apple
 avocado
 banana
-blueberry
+cherry
+kiwi
 mango
 orange
 pineapple
+stawberries
 watermelon

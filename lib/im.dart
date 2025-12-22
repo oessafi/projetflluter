@@ -107,7 +107,7 @@ class _MymenuState extends State<Mymenu> {
                     // Si user.photoURL existe, on l'utilise, sinon image par défaut
                     backgroundImage: user?.photoURL != null
                         ? NetworkImage(user!.photoURL!)
-                        : const AssetImage('assets/image/OIP.jpg') as ImageProvider,
+                        : const AssetImage('assets/image/default_user.png') as ImageProvider,
                   ),
                   // Indicateur de chargement pendant l'upload
                   if (_isUploading)
